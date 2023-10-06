@@ -2,7 +2,7 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     String buildCommandString = ''
 
     // validate the path of the runUAT batch (optional)
-    String runUATBatchPath = args.get('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
+    String runUATBatchPath = args.getOrDefault('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
     if (!runUATBatchPath?.trim()) {
         echo 'BuildCookAndRunUAT exited with an error: runUATPath cannot be empty!'
         return false
@@ -15,7 +15,7 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     buildCommandString += "${runUATBatchPath} BuildCookRun"
 
     // validate project path (required)
-    String project = args.get('project', null)
+    String project = args.getOrDefault('project', null)
     if (!project?.trim()) {
         echo 'BuildCookAndRunUAT exited with an error: project argument is required but found empty!'
         return false
@@ -24,7 +24,7 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     buildCommandString += " -project=\"${project}\""
 
     //target validation (required)
-    String targetArgument = args.get('target')
+    String targetArgument = args.getOrDefault('target')
     if (!targetArgument?.trim()) {
         echo 'BuildCookAndRunUAT exited with an error: target argument is required but found empty!'
         return false
@@ -34,15 +34,15 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     buildCommandString += ' -build -cook -compile -iterate -stage -package -pak'
 
     // platform (optional)
-    String platformArgument = args.get('platform', 'Win64')
+    String platformArgument = args.getOrDefault('platform', 'Win64')
     buildCommandString += " -platform=${platformArgument}"
 
     //clientconfig (optional)
-    String clientConfigArgument = args.get('clientconfig', 'Development')
+    String clientConfigArgument = args.getOrDefault('clientconfig', 'Development')
     buildCommandString += " -clientconfig=${clientConfigArgument}"
 
     //clientconfig (optional)
-    String archiveDirectoryArgument = args.get('archivedirectory', "${WORKSPACE}\\Build")
+    String archiveDirectoryArgument = args.getOrDefault('archivedirectory', "${WORKSPACE}\\Build")
     buildCommandString += " -archive -archivedirectory=\"${archiveDirectoryArgument}\""
 
     // execute the batch with all arguments
