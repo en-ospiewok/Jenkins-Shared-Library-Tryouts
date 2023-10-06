@@ -51,8 +51,10 @@ void BuildCookAndRunUAT(Map args = [:]) {
     buildCommandString += " -archive -archivedirectory=\"${archiveDirectoryArgument}\""
 
     // execute the batch with all arguments
-    echo "Run command ${buildCommandString}"
-    bat "${buildCommandString}"
+    println "Run command ${buildCommandString}"
+
+    // run the batch
+    "${buildCommandString}"
 }
 
 void BuildCookAndRunUAT(String projectPath) {
