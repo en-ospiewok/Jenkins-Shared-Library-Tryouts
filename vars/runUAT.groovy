@@ -4,12 +4,12 @@ void BuildCookAndRunUAT(Map args = [:]) {
     // validate the path of the runUAT batch (optional)
     String runUATPathArgument = args.getOrDefault('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
     if (!runUATPathArgument?.trim()) {
-        currentBuild.result = 'ABORTED'
+        currentBuild.result = 'FAILURE'
         error('BuildCookAndRunUAT exited with an error: runUATPath cannot be empty!')
         return
     }
     if (!runUATPathArgument.contains('RunUAT.bat')) {
-        currentBuild.result = 'ABORTED'
+        currentBuild.result = 'FAILURE'
         error('BuildCookAndRunUAT exited with an error: runUATPath have to contain \"RunUAT.bat\"!')
         return
     }
@@ -19,7 +19,7 @@ void BuildCookAndRunUAT(Map args = [:]) {
     // validate project path (required)
     String project = args.getOrDefault('project', null)
     if (!project?.trim()) {
-        currentBuild.result = 'ABORTED'
+        currentBuild.result = 'FAILURE'
         error('BuildCookAndRunUAT exited with an error: project argument is required but found empty!')
         return
     }
@@ -29,7 +29,7 @@ void BuildCookAndRunUAT(Map args = [:]) {
     //target validation (required)
     String targetArgument = args.getOrDefault('target', null)
     if (!targetArgument?.trim()) {
-        currentBuild.result = 'ABORTED'
+        currentBuild.result = 'FAILURE'
         error('BuildCookAndRunUAT exited with an error: target argument is required but found empty!')
         return
     }
