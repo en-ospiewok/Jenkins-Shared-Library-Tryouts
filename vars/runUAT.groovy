@@ -52,8 +52,8 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
 }
 
 boolean BuildCookAndRunUAT(String projectPath) {
-    argumentMap = [
-        'projectPath' : projectPath
+    Map argumentMap = [
+        'project' : projectPath
     ]
-    return BuildCookAndRunUAT(argumentMap)
+    return runUAT.BuildCookAndRunUAT(argumentMap)
 }
