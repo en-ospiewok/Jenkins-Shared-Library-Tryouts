@@ -24,7 +24,7 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     buildCommandString += " -project=\"${project}\""
 
     //target validation (required)
-    String targetArgument = args.getOrDefault('target')
+    String targetArgument = args.getOrDefault('target', null)
     if (!targetArgument?.trim()) {
         echo 'BuildCookAndRunUAT exited with an error: target argument is required but found empty!'
         return false
