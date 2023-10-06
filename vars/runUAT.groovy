@@ -2,17 +2,17 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     String buildCommandString = ''
 
     // validate the path of the runUAT batch (optional)
-    String runUATBatchPath = args.getOrDefault('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
-    if (!runUATBatchPath?.trim()) {
+    String runUATPathArgument = args.getOrDefault('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
+    if (!runUATPathArgument?.trim()) {
         echo 'BuildCookAndRunUAT exited with an error: runUATPath cannot be empty!'
         return false
     }
-    if (!runUATPath.contains('RunUAT.bat')) {
+    if (!runUATPathArgument.contains('RunUAT.bat')) {
         echo 'BuildCookAndRunUAT exited with an error: runUATPath have to contain \"RunUAT.bat\"!'
         return false
     }
 
-    buildCommandString += "${runUATBatchPath} BuildCookRun"
+    buildCommandString += "${runUATPathArgument} BuildCookRun"
 
     // validate project path (required)
     String project = args.getOrDefault('project', null)
