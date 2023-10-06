@@ -1,15 +1,17 @@
-boolean BuildCookAndRunUAT(Map args = [:]) {
+void BuildCookAndRunUAT(Map args = [:]) {
     String buildCommandString = ''
 
     // validate the path of the runUAT batch (optional)
     String runUATPathArgument = args.getOrDefault('runUATPath', 'Engine/Build/BatchFiles/RunUAT.bat')
     if (!runUATPathArgument?.trim()) {
-        echo 'BuildCookAndRunUAT exited with an error: runUATPath cannot be empty!'
-        return false
+        currentBuild.result = 'ABORTED'
+        error('BuildCookAndRunUAT exited with an error: runUATPath cannot be empty!')
+        return
     }
     if (!runUATPathArgument.contains('RunUAT.bat')) {
-        echo 'BuildCookAndRunUAT exited with an error: runUATPath have to contain \"RunUAT.bat\"!'
-        return false
+        currentBuild.result = 'ABORTED'
+        error('BuildCookAndRunUAT exited with an error: runUATPath have to contain \"RunUAT.bat\"!')
+        return
     }
 
     buildCommandString += "${runUATPathArgument} BuildCookRun"
@@ -17,8 +19,9 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     // validate project path (required)
     String project = args.getOrDefault('project', null)
     if (!project?.trim()) {
-        echo 'BuildCookAndRunUAT exited with an error: project argument is required but found empty!'
-        return false
+        currentBuild.result = 'ABORTED'
+        error('BuildCookAndRunUAT exited with an error: project argument is required but found empty!')
+        return
     }
 
     buildCommandString += " -project=\"${project}\""
@@ -26,8 +29,9 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     //target validation (required)
     String targetArgument = args.getOrDefault('target', null)
     if (!targetArgument?.trim()) {
-        echo 'BuildCookAndRunUAT exited with an error: target argument is required but found empty!'
-        return false
+        currentBuild.result = 'ABORTED'
+        error('BuildCookAndRunUAT exited with an error: target argument is required but found empty!')
+        return
     }
 
     // add some fix parameters, which are not parametized atm
@@ -51,9 +55,9 @@ boolean BuildCookAndRunUAT(Map args = [:]) {
     return true
 }
 
-boolean BuildCookAndRunUAT(String projectPath) {
+void BuildCookAndRunUAT(String projectPath) {
     Map argumentMap = [
         'project' : projectPath
     ]
-    return runUAT.BuildCookAndRunUAT(argumentMap)
+    runUAT.BuildCookAndRunUAT(argumentMap)
 }
