@@ -54,8 +54,7 @@ void call(Map args = [:]) {
         // execute the batch with all arguments
         println "Run command ${buildCommandString}"
 
-        bat "${buildCommandString}"
+        // run the batch
+        bat(script:"${buildCommandString}")
     }
-
-    // run the batch
 }
