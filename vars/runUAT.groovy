@@ -1,4 +1,4 @@
-void BuildCookAndRunUAT(Map args = [:]) {
+void call(Map args = [:]) {
     script {
         // do a bit of logic in a script block to create the proper build command string
         String buildCommandString = ''
@@ -59,10 +59,3 @@ void BuildCookAndRunUAT(Map args = [:]) {
 
     // run the batch
 }
-
-// void BuildCookAndRunUAT(String projectPath) {
-//     Map argumentMap = [
-//         'project' : projectPath
-//     ]
-//     runUAT.BuildCookAndRunUAT(argumentMap)
-// }
